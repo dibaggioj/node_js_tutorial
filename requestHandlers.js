@@ -10,9 +10,7 @@ function start(response, postData) {
 		'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />'+
 		'</head>'+
 		'<body>'+
-		// '<form action="/upload" method="post">'+
 		'<form action="/upload" enctype="multipart/form-data" method="post">'+
-		// '<textarea name="text" rows="20" cols="60"></textarea>'+
 		'<input type="file" value="upload" />'+
 		'<input type="submit" value="Upload file" />'+
 		'</form>'+
