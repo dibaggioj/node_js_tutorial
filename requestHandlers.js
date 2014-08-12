@@ -5,11 +5,14 @@ var exec = require("child_process").exec; // non-blocking operation: exec()
 function start(response) {
 	console.log("Request handler 'start' was called.");
 
-	exec("ls -lah", function (error, stdout, stderr) { // a more expensive operation than "ls -lah" (which gets a list of all files in the current directory) is "find /"
-		response.writeHead(200, {"Content-Type": "text/plain"});
-		response.write(stdout);
-		response.end();
-	});
+	// This will make HTTP requests to http://localhost:8888/start take at least 10 seconds, but requests to http://localhost:8888/upload will be answered immediately, even if /start is still computing.
+	exec("find /",
+		{ timeout: 10000, maxBuffer: 2000*1024 },
+		function (error, stdout, stderr) { // a more expensive operation than "ls -lah" (which gets a list of all files in the current directory) is "find /"
+			response.writeHead(200, {"Content-Type": "text/plain"});
+			response.write(stdout);
+			response.end();
+		});
 }
 
 function upload(response) {
